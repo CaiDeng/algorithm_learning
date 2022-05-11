@@ -2,14 +2,14 @@ package helper
 
 // Stack 栈
 type Stack struct {
-	elems []int
+	elems []interface{}
 }
 
-func (s *Stack) push(value int) {
+func (s *Stack) push(value interface{}) {
 	s.elems = append(s.elems, value)
 }
 
-func (s *Stack) pop() (topElem int) {
+func (s *Stack) pop() (topElem interface{}) {
 	if len(s.elems) == 0 {
 		return -1
 	}
