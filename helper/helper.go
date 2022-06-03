@@ -11,3 +11,20 @@ func ContainsInt(array []int, val int) (index int) {
 	}
 	return
 }
+
+// Min two integer number minmum
+func Min(x, y int) int {
+	if x < y {
+		return x
+	}
+	return y
+}
+
+// Max two integer number maxmum
+func Max(x, y int) int {
+	if x < y {
+		return y
+	}
+
+	return x
+}
