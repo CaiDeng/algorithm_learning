@@ -14,6 +14,9 @@ type ListNode struct {
 }
 
 func createLinklist(list []int) *ListNode {
+	if list == nil {
+		return nil
+	}
 	preHead := &ListNode{}
 	pre := preHead
 	for _, val := range list {
