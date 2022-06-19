@@ -7,42 +7,57 @@ import (
 	funk "github.com/thoas/go-funk"
 )
 
-const invalidVal = -1
-
 // NewTree 给定一个完全树的列表，构建成一个树结构
 func NewTree(nodeList []int) (root *TreeNode) {
 	if len(nodeList) == 0 {
 		return nil
 	}
 
-	pre := new(TreeNode)
 	q := helper.NewQueue()
-	q.Enqueue(pre)
-	for index, val := range nodeList {
-		peek, _ := q.Peek()
-		parent := peek.(*TreeNode)
+	index := 0
+	root = &TreeNode{Val: nodeList[index]}
+	q.Enqueue(root)
+	parents := []*TreeNode{}
+	for !q.Empty() {
+		length := q.Size()
+		nextParent := []*TreeNode{}
+		for i := 0; i < length; i++ {
+			peek, _ := q.Dequeue()
+			node := peek.(*TreeNode)
+			if len(parents) > 0 {
+				parent := parents[i>>1]
+				if i&1 == 0 {
+					parent.Left = node
+				} else {
+					parent.Right = node
+				}
+			}
 
-		var leafNode *TreeNode
-		if val != invalidVal {
-			leafNode = &TreeNode{Val: val}
-		}
-
-		q.Enqueue(leafNode)
-
-		if parent != nil {
-			if index%2 == 1 {
-				parent.Left = leafNode
-			} else {
-				parent.Right = leafNode
+			if node != nil {
+				nextParent = append(nextParent, node)
+				var subNode *TreeNode
+				index++
+				if index < len(nodeList) {
+					if nodeList[index] != invalidVal {
+						subNode = &TreeNode{Val: nodeList[index]}
+					}
+					q.Enqueue(subNode)
+				}
+				index++
+				if index < len(nodeList) {
+					subNode = nil
+					if nodeList[index] != invalidVal {
+						subNode = &TreeNode{Val: nodeList[index]}
+					}
+					q.Enqueue(subNode)
+				}
 			}
 		}
 
-		if index%2 == 0 {
-			q.Dequeue()
-		}
-
+		parents = nextParent
 	}
-	return pre.Right
+
+	return root
 }
 
 func TestLevelOrder(t *testing.T) {
