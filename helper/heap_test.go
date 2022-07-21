@@ -19,7 +19,7 @@ func TestNewHeap(t *testing.T) {
 				return i1 > i2
 			},
 			[]string{"new", "get", "delete", "get", "delete"},
-			[]int{invalid, 6, 6, 5, 5},
+			[]int{Invalid, 6, 6, 5, 5},
 		},
 		{
 			[]int{1, 6, 3, 2, 5, 4},
@@ -27,7 +27,7 @@ func TestNewHeap(t *testing.T) {
 				return i1 < i2
 			},
 			[]string{"new", "get", "delete", "delete", "get"},
-			[]int{invalid, 1, 1, 2, 3},
+			[]int{Invalid, 1, 1, 2, 3},
 		},
 	}
 
@@ -43,16 +43,16 @@ Loop:
 				if err != nil {
 					break Loop
 				}
-				got = append(got, invalid)
+				got = append(got, Invalid)
 			case "get":
 				if extremum, err := h.Extremum(); err != nil {
-					got = append(got, invalid)
+					got = append(got, Invalid)
 				} else {
 					got = append(got, extremum)
 				}
 			case "delete":
 				if extremum, err := h.DeleteExtremum(); err != nil {
-					got = append(got, invalid)
+					got = append(got, Invalid)
 				} else {
 					got = append(got, extremum)
 				}
